@@ -1,57 +1,66 @@
 public class Radio {
-    private int getVolume;
-    private int currentStation; // Номер текущей радиостанции
-    private int currentVolume; //Громкость звука
+    private int currentStation;
+    private int minStation = 0;
+    private int currentVolume;
+    private int minVolume = 0;
+    private int maxVolume = 100;
+    private int totalStation = 10;
+
+    public Radio() {
+    }
+
+    public Radio(int countStation) {
+        this.totalStation = countStation;
+    }
 
     public int getCurrentStation() {
         return currentStation;
     }
 
     public void setCurrentStation(int currentStation) {
-        if (currentStation > 9 || currentStation < 0) {
+        if (currentStation < minStation || currentStation > totalStation - 1) {
             return;
         }
         this.currentStation = currentStation;
     }
 
-    public void next() {
-        if (currentStation == 9) {
-            setCurrentStation(0);
+    public void nextStation() {
+        if (totalStation - 1 <= currentStation) {
+            setCurrentStation(minStation);
         } else {
             setCurrentStation(currentStation + 1);
         }
     }
 
-    public void prev() {
-        if (currentStation <= 0) {
-            setCurrentStation(9);
+    public void prevStation() {
+        if (currentStation <= minStation) {
+            setCurrentStation(totalStation - 1);
         } else {
             setCurrentStation(currentStation - 1);
         }
-    }//метод prev для одноименной кнопки
+    }
 
-    public int getVolume() {
+    public int getCurrentVolume() {
         return currentVolume;
-    } //получение текущего уровня звука
+    }
 
-    public void setVolume(int currentVolume) {
-        if (currentVolume < 0 || currentVolume > 100) {
+    public void setCurrentVolume(int currentVolume) {
+        if (currentVolume < minVolume || currentVolume > maxVolume) {
             return;
         }
         this.currentVolume = currentVolume;
-    }//установка уровня звука
+    }
 
     public void increaseVolume() {
-
-        if (currentVolume < 100) {
-            currentVolume = currentVolume + 1;
+        if (currentVolume < maxVolume) {
+            currentVolume++;
         }
-
-    }//увеличение громкости
+    }
 
     public void lessVolume() {
         if (currentVolume > 0) {
-            currentVolume = currentVolume - 1;
+            currentVolume--;
         }
-    }//уменьшение громкости
+    }
+
 }
